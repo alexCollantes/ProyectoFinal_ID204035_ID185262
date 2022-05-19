@@ -25,17 +25,17 @@ public class Guia extends Empleado {
         this.itinerarioAsignado = itinerarioAsignado;
     }
 
-    public Guia(String itinerarioAsignado, String nombre, String direccion, String telefono, ObjectId id, Date fechaIngreso) {
+    public Guia(String itinerarioAsignado, String nombre, String direccion, int telefono, ObjectId id, Date fechaIngreso) {
         super(nombre, direccion, telefono, id, fechaIngreso);
         this.itinerarioAsignado = itinerarioAsignado;
     }
 
-    public Guia(String itinerarioAsignado, String nombre, String direccion, String telefono, Date fechaIngreso) {
+    public Guia(String itinerarioAsignado, String nombre, String direccion, int telefono, Date fechaIngreso) {
         super(nombre, direccion, telefono, fechaIngreso);
         this.itinerarioAsignado = itinerarioAsignado;
     }
 
-    public Guia(String nombre, String direccion, String telefono,  Date fechaIngreso) {
+    public Guia(String nombre, String direccion, int telefono,  Date fechaIngreso) {
         super(nombre, direccion, telefono,  fechaIngreso);
     }
     
@@ -64,11 +64,11 @@ public class Guia extends Empleado {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 

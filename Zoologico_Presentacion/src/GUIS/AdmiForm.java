@@ -7,6 +7,7 @@ import implementaciones.*;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import validadores.Validadores;
 
 /**
  *
@@ -16,6 +17,7 @@ public class AdmiForm extends javax.swing.JFrame {
 
 //    IAdministradorDAO administradorDAO;
     INegocio negocio;
+      private Validadores validadores = new Validadores();
     /**
      * Creates new form AdmiForm
      */
@@ -44,7 +46,7 @@ public class AdmiForm extends javax.swing.JFrame {
         String usuario = this.txtUsuario.getText();
         String contraseña = this.txtContraseña.getText();
         Date fecha = this.jDateChooser1.getDate();
-        String telefono = this.txtTelefono.getText();
+        Integer telefono = Integer.valueOf(this.txtTelefono.getText());
         try {
             Administrador admi = new Administrador(usuario, contraseña, nombre, direccion, telefono, fecha);
             this.negocio.agregar(admi);
@@ -69,6 +71,14 @@ public class AdmiForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Ya se encuentra el nombre de usuario ocupado", "error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+        }
+        try{
+        if(validadores.ValidaTelefono(this.txtTelefono.getText())){
+            JOptionPane.showMessageDialog(this, "El telefono es invalido", "error", JOptionPane.ERROR_MESSAGE);
+                return false;
+        }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "El telefono es invalido", "error", JOptionPane.ERROR_MESSAGE);
         }
         return true;
     }
@@ -253,10 +263,14 @@ public class AdmiForm extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        try{
         if(this.verificarCampos()){
             this.guardar();
         }else{
             JOptionPane.showMessageDialog(this, "vuelva a intentarlo", "error", JOptionPane.ERROR_MESSAGE);
+        }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "El telefono es invalido", "error", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btnGuardarActionPerformed

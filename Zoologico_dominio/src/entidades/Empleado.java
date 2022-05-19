@@ -13,7 +13,8 @@ import org.bson.types.ObjectId;
  * @author Alejandro
  */
 public class Empleado {
-    protected String nombre,direccion,telefono;
+    protected String nombre,direccion;
+    protected int telefono;
     protected ObjectId id;
     protected Date fechaIngreso;
     
@@ -25,7 +26,7 @@ public class Empleado {
         this.id = id;
     }
 
-    public Empleado(String nombre, String direccion, String telefono, ObjectId id, Date fechaIngreso) {
+    public Empleado(String nombre, String direccion, int telefono, ObjectId id, Date fechaIngreso) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -34,7 +35,7 @@ public class Empleado {
     }
 
     
-    public Empleado(String nombre, String direccion, String telefono, Date fechaIngreso) {
+    public Empleado(String nombre, String direccion, int telefono, Date fechaIngreso) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -65,11 +66,11 @@ public class Empleado {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 

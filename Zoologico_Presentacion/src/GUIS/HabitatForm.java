@@ -22,8 +22,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alejandro
  */
-public class HabitadForm extends javax.swing.JFrame {
+public class HabitatForm extends javax.swing.JFrame {
 //    IHabitatDAO habitatDAO;
+
     INegocio negocio;
     List<Continente> lista = (LinkedList<Continente>) new LinkedList();
     List<Continente> listaC = (LinkedList<Continente>) new LinkedList();
@@ -32,7 +33,7 @@ public class HabitadForm extends javax.swing.JFrame {
     /**
      * Creates new form HabitadFom
      */
-    public HabitadForm() {
+    public HabitatForm() {
         initComponents();
 //        this.lista=lista;
 //        this.listaC=listaC;
@@ -47,13 +48,14 @@ public class HabitadForm extends javax.swing.JFrame {
         cargarComboBoxClima();
     }
 
-    public void cargarComboBoxClima(){
-         List<Clima> listaV = (LinkedList<Clima>) this.negocio.consultarTodosClima();
+    public void cargarComboBoxClima() {
+        List<Clima> listaV = (LinkedList<Clima>) this.negocio.consultarTodosClima();
         for (int i = 0; i < listaV.size(); i++) {
             cbClima.addItem(listaV.get(i).getTipo());
 
         }
     }
+
     public void cargarComboBoxVegetacion() {
         List<Vegetacion> listaV = (LinkedList<Vegetacion>) this.negocio.consultarTodosVegetacion();
         for (int i = 0; i < listaV.size(); i++) {
@@ -65,51 +67,62 @@ public class HabitadForm extends javax.swing.JFrame {
     public void limpiarCampos() {
         this.txtNombre.setText("");
         this.txtDescripcion.setText("");
-        
+
     }
 
     public void guardar() {
         String nombre = this.txtNombre.getText();
         String descripcion = this.txtDescripcion.getText();
-     
-     Clima clima = new Clima(cbClima.getSelectedItem().toString());
-     Vegetacion vegetacion = new Vegetacion(cbVegetacion.getSelectedItem().toString());
-     Continente[] c = new Continente[2];
-     c[0]= new Continente("Asia");
-     c[1]= new Continente("America");
+
+        Clima clima = new Clima(cbClima.getSelectedItem().toString());
+        Vegetacion vegetacion = new Vegetacion(cbVegetacion.getSelectedItem().toString());
         try {
-            Habitat habitat = new Habitat(nombre, descripcion,c[0]
-                    ,clima,vegetacion);
+            Habitat habitat = new Habitat(nombre, descripcion,
+                    clima, vegetacion, lista);
             this.negocio.agregar(habitat);
             JOptionPane.showMessageDialog(this, "El habitat se ha guardado correctamente.",
                     "Confimación", JOptionPane.INFORMATION_MESSAGE);
+            int selec = JOptionPane.showConfirmDialog(this, "¿Desea agregar otro habitat?", "Sistema", JOptionPane.YES_NO_OPTION);
+            if (selec == 0) {
+                HabitatForm h = new HabitatForm();
+                h.setVisible(true);
+                dispose();
+                return;
+            } else if (selec == 1) {
+                JOptionPane.showMessageDialog(this, "Volvera al menu principal",
+                        "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                MenuForm m = new MenuForm();
+                m.setVisible(true);
+                dispose();
+                return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         limpiarCampos();
-        
+
     }
-    
-    public boolean verificarCampos(){
-        if(this.txtNombre.getText().equalsIgnoreCase("") || this.txtDescripcion.getText().equalsIgnoreCase("")){
+
+    public boolean verificarCampos() {
+        if (this.txtNombre.getText().equalsIgnoreCase("") || this.txtDescripcion.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(this, "algunos de los campos esta vacio", "error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
+            return false;
+        }
         return true;
     }
 
     public boolean verificarNombre() {
-        List<Habitat> listaHabitats = (LinkedList<Habitat>)negocio.consultarTodosHabitat();
+        List<Habitat> listaHabitats = (LinkedList<Habitat>) negocio.consultarTodosHabitat();
         for (Habitat habitat : listaHabitats) {
             if (this.txtNombre.getText().equalsIgnoreCase(habitat.getNombre())) {
                 JOptionPane.showMessageDialog(this, "El nombre se encuentra ocupado! ", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
         }
-         if(this.txtNombre.getText().equalsIgnoreCase("")){
+        if (this.txtNombre.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(this, "El campo nombre especie esta vacio", "Sistema", JOptionPane.ERROR_MESSAGE);
-        return false;
-         }
+            return false;
+        }
         JOptionPane.showMessageDialog(this, "El nombre esta disponible", "Sistema", JOptionPane.INFORMATION_MESSAGE);
         this.txtDescripcion.setEditable(true);
         this.cbClima.setEnabled(true);
@@ -135,7 +148,7 @@ public class HabitadForm extends javax.swing.JFrame {
 
     }
 
-    private void agregarContinenteTabla() {
+    public void agregarContinenteTabla() {
         int fila = this.tblContinenteDisponible.getSelectedRow();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblContinenteSeleccionado.getModel();
@@ -153,11 +166,22 @@ public class HabitadForm extends javax.swing.JFrame {
                 modeloTabla.addRow(f);
                 lista.add(c);
                 modelo.setValueAt(d, i, 0);
-               
 
             }
         }
 
+    }
+
+    public void eliminarContinenteTabla() {
+        int fila = this.tblContinenteSeleccionado.getSelectedRow();
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblContinenteSeleccionado.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) this.tblContinenteDisponible.getModel();
+        for (int i = 0; i < lista.size(); i++) {
+            modeloTabla.removeRow(fila);
+            lista.remove(fila);
+          
+        }
     }
 
     /**
@@ -466,9 +490,9 @@ public class HabitadForm extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if(this.verificarCampos()){
-        this.guardar();
-        }else{
+        if (this.verificarCampos()) {
+            this.guardar();
+        } else {
             JOptionPane.showMessageDialog(this, "vuelva a intentarlo", "error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -497,6 +521,7 @@ public class HabitadForm extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        this.eliminarContinenteTabla();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tblContinenteDisponibleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblContinenteDisponibleMouseClicked

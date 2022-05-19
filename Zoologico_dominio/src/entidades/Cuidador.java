@@ -34,14 +34,14 @@ public class Cuidador extends Empleado {
         this.fechaEspecie = fechaEspecie;
     }
 
-    public Cuidador(String basicoEsp, String expertoEsp, Date fechaEspecie, String nombre, String direccion, String telefono, ObjectId id, Date fechaIngreso) {
+    public Cuidador(String basicoEsp, String expertoEsp, Date fechaEspecie, String nombre, String direccion, int telefono, ObjectId id, Date fechaIngreso) {
         super(nombre, direccion, telefono, id, fechaIngreso);
         this.basicoEsp = basicoEsp;
         this.expertoEsp = expertoEsp;
         this.fechaEspecie = fechaEspecie;
     }
 
-    public Cuidador(String basicoEsp, String expertoEsp, Date fechaEspecie, String nombre, String direccion, String telefono, Date fechaIngreso) {
+    public Cuidador(String basicoEsp, String expertoEsp, Date fechaEspecie, String nombre, String direccion, int telefono, Date fechaIngreso) {
         super(nombre, direccion, telefono, fechaIngreso);
         this.basicoEsp = basicoEsp;
         this.expertoEsp = expertoEsp;
@@ -88,11 +88,11 @@ public class Cuidador extends Empleado {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 

@@ -13,13 +13,14 @@ import implementaciones.NegocioFactory;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import validadores.Validadores;
 
 /**
  *
  * @author Alejandro
  */
 public class ItinerarioForm extends javax.swing.JFrame {
-
+ private Validadores validadores = new Validadores();
     INegocio negocio;
 
     /**
@@ -56,14 +57,23 @@ public class ItinerarioForm extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "algunos de los campos esta vacio", "error", JOptionPane.ERROR_MESSAGE);
         return false;
     }
+//    try{
+//    if(validadores.ValidaNumero(this.txtLongitud.getText()) || validadores.ValidaNumero(this.txtNumVisitantes.getText())){
+//       
+//        return false;
+//    }
+//    }catch(Exception e){
+//        
+//        
+//    }
     return true;
     }
     
 public void guardar(){
     String nombreItinerario = this.txtNombreItinerario.getText();
     String duracion = this.txtDuracion.getText();
-    Float longitud = (Float) Float.valueOf(this.txtNumVisitantes.getText());
-    Integer numVistitantes = (Integer) Integer.parseInt(this.txtLongitud.getText());
+    Float longitud = (Float) Float.valueOf(this.txtLongitud.getText());
+    Integer numVistitantes = (Integer) Integer.parseInt(this.txtNumVisitantes.getText());
     Zona z = null;
     List<Zona> listaZona = negocio.consultarTodosZona();
     for (Zona zona : listaZona) {
@@ -102,11 +112,8 @@ public void guardar(){
                 return false;
             }
         }
-        if (this.txtNombreItinerario.getText().equalsIgnoreCase("")) {
-            JOptionPane.showMessageDialog(this, "El campo nombre especie esta vacio", "Sistema", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        JOptionPane.showMessageDialog(this, "El nombre esta disponible", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+      
+        JOptionPane.showMessageDialog(this, "El nombre esta disponible!!, se iniciara el registro!", "Sistema", JOptionPane.INFORMATION_MESSAGE);
         this.txtDuracion.setEnabled(true);
         this.txtHora.setEnabled(true);
         this.txtLongitud.setEnabled(true);
@@ -148,6 +155,8 @@ public void guardar(){
         jLabel25 = new javax.swing.JLabel();
         cbGuias = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,6 +229,12 @@ public void guardar(){
         jDateChooser1.setDateFormatString("yyyy/MM/dd");
         jDateChooser1.setEnabled(false);
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel1.setText("min");
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel2.setText("mtrs");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -253,19 +268,25 @@ public void guardar(){
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNumVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNombreItinerario)
-                                .addComponent(txtDuracion)
-                                .addComponent(cbZonas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cbGuias, 0, 111, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombreItinerario)
+                                    .addComponent(txtDuracion)
+                                    .addComponent(cbZonas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbGuias, 0, 111, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1)))
+                        .addGap(0, 244, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtHora, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                                .addComponent(txtLongitud, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtHora, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                                    .addComponent(txtLongitud, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2))
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(238, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +298,8 @@ public void guardar(){
                         .addGap(70, 70, 70)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19)))
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -290,7 +312,8 @@ public void guardar(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel22)
@@ -343,10 +366,15 @@ public void guardar(){
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        try{
         if(this.verificarCampos()){
             this.guardar();
         }else{
             JOptionPane.showMessageDialog(this, "vuelva a intentarlo", "error", JOptionPane.ERROR_MESSAGE);
+        }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error al ingresar datos", "error", JOptionPane.ERROR_MESSAGE);
+         
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -358,9 +386,11 @@ public void guardar(){
     private javax.swing.JComboBox<String> cbGuias;
     private javax.swing.JComboBox<String> cbZonas;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;

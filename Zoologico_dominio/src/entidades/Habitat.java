@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import java.util.List;
 import java.util.Objects;
 import org.bson.types.ObjectId;
 
@@ -13,17 +14,29 @@ import org.bson.types.ObjectId;
  * @author Alejandro
  */
 public class Habitat {
+
     private ObjectId id;
-    private String nombre,descripcion;
+    private String nombre, descripcion;
     private Continente continente;
     private Clima clima;
     private Vegetacion vegetacion;
+    private List<Continente> continentes;
 
     public Habitat() {
     }
 
+    public Habitat(String nombre, String descripcion, Clima clima, Vegetacion vegetacion,List<Continente> continentes) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.clima = clima;
+        this.vegetacion = vegetacion;
+        this.continentes = continentes;
+    }
+
+    
+    
     public Habitat(ObjectId id, String nombre, String descripcion, Continente continente, Clima clima, Vegetacion vegetacion) {
-        this.id= id;
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.continente = continente;
@@ -38,6 +51,17 @@ public class Habitat {
         this.clima = clima;
         this.vegetacion = vegetacion;
     }
+
+    public List<Continente> getContinentes() {
+        return continentes;
+    }
+
+    public void setContinentes(List<Continente> continentes) {
+        this.continentes = continentes;
+    }
+
+  
+    
 
     public ObjectId getId() {
         return id;
@@ -113,7 +137,5 @@ public class Habitat {
     public String toString() {
         return "Habitat{" + "idHabitat=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", continente=" + continente + ", clima=" + clima + ", vegetacion=" + vegetacion + '}';
     }
-   
-    
-    
+
 }

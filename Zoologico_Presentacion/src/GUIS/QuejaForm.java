@@ -12,13 +12,14 @@ import implementaciones.NegocioFactory;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import validadores.Validadores;
 
 /**
  *
  * @author Alejandro
  */
 public class QuejaForm extends javax.swing.JFrame {
-
+  private Validadores validadores = new Validadores();
     INegocio negocio;
 
     /**
@@ -31,7 +32,9 @@ public class QuejaForm extends javax.swing.JFrame {
         this.setResizable(true);//Modifica tamaño ventana
         this.setLocationRelativeTo(null);//Centrar
         cargarComboBoxItinerario();
+        
          List<Itinerario> listaItinerario = negocio.consultarTodosItinerario();
+//         cargarComboBoxDia();
         
     }
     
@@ -71,14 +74,14 @@ public class QuejaForm extends javax.swing.JFrame {
         }
     }
     
-    public void cargarComboBoxDia(){
-        
-        List<Itinerario> listaItinerarioDia = negocio.consultarTodosItinerario();
-        for (int i = 0; i < listaItinerarioDia.size(); i++) {
-            cbDia.addItem(listaItinerarioDia.get(i).getFecha());
-        
-        }
-    }
+//    public void cargarComboBoxDia(){
+//        
+//        List<Itinerario> listaItinerarioDia = negocio.consultarTodosItinerario();
+//        for (int i = 0; i < listaItinerarioDia.size(); i++) {
+//            cbDia.addItem(listaItinerarioDia.get(i).getFecha();
+//        
+//        }
+//    }
 
     public void limpiarCampos(){
         this.txtGuia.setText("");
@@ -91,6 +94,10 @@ public class QuejaForm extends javax.swing.JFrame {
         if(this.txtCorreo.getText().equalsIgnoreCase("")|| this.txtTelefono.getText().equalsIgnoreCase("")
                 || this.txtQueja.getText().equalsIgnoreCase("")|| this.txtNombre.getText().equalsIgnoreCase("")){
             JOptionPane.showMessageDialog(this, "algunos de los campos esta vacio", "error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if(validadores.ValidaEmail(this.txtCorreo.getText())){
+            JOptionPane.showMessageDialog(this, "correo no valido", "error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -123,6 +130,7 @@ public class QuejaForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
+        btnLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +163,12 @@ public class QuejaForm extends javax.swing.JFrame {
         txtQueja.setRows(5);
         jScrollPane1.setViewportView(txtQueja);
 
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoActionPerformed(evt);
+            }
+        });
+
         jButton2.setBackground(new java.awt.Color(255, 255, 153));
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +188,13 @@ public class QuejaForm extends javax.swing.JFrame {
 
         txtNombre.setToolTipText("");
 
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -187,6 +208,8 @@ public class QuejaForm extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(jButton2)
+                .addGap(54, 54, 54)
+                .addComponent(btnLimpiar)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +282,8 @@ public class QuejaForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(btnLimpiar))
                 .addGap(76, 76, 76))
         );
 
@@ -298,8 +322,18 @@ public class QuejaForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+this.limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<Date> cbDia;
     private javax.swing.JComboBox<String> cbItinerario;

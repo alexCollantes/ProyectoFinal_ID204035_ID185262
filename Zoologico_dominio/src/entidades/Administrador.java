@@ -21,7 +21,7 @@ public class Administrador extends Empleado {
         this.contraseña = contraseña;
     }
 
-    public Administrador(String usuario, String contraseña, String nombre, String direccion, String telefono, Date fechaIngreso) {
+    public Administrador(String usuario, String contraseña, String nombre, String direccion, int telefono, Date fechaIngreso) {
         super(nombre, direccion, telefono, fechaIngreso);
         this.usuario = usuario;
         this.contraseña = contraseña;
@@ -36,7 +36,7 @@ public class Administrador extends Empleado {
     public Administrador() {
     }
 
-    public Administrador(ObjectId id,String usuario, String contraseña, String nombre, String direccion, String telefono, Date fechaIngreso) {
+    public Administrador(ObjectId id,String usuario, String contraseña, String nombre, String direccion, int telefono, Date fechaIngreso) {
         super(nombre, direccion, telefono,id, fechaIngreso);
         this.usuario = usuario;
         this.contraseña = contraseña;
@@ -82,11 +82,11 @@ public class Administrador extends Empleado {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 

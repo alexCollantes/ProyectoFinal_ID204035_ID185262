@@ -159,7 +159,7 @@ public class MenuForm extends javax.swing.JFrame {
 
     private void btnRegistarHabitadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarHabitadActionPerformed
         // TODO add your handling code here:
-        HabitadForm h = new HabitadForm();
+        HabitatForm h = new HabitatForm();
         h.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegistarHabitadActionPerformed
